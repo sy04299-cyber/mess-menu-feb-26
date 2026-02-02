@@ -35,7 +35,6 @@ main{max-width:980px;margin:18px auto}
 .tag-nv{background:var(--nonveg)}
 .meal-list{margin:6px 0 0 18px;padding:0}
 .notes{margin-top:8px;color:var(--muted);font-size:0.95rem}
-.print-header{display:none}
 @media(min-width:760px){
   #menuDisplay{grid-template-columns:repeat(2,1fr)}
 }
@@ -44,5 +43,4 @@ main{max-width:980px;margin:18px auto}
   body{padding:0}
   #menuDisplay{grid-template-columns:1fr}
   .card-day{border-left:none;border-top:6px solid var(--accent)}
-  .print-header{display:block;padding:12px;background:#fff;border-bottom:1px solid #e6e6e6}
 }
