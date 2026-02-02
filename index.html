@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mess Menu — February 2026</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <h1>Mess Menu — February 2026</h1>
+      <p class="subtitle">Automatically shows today's menu. Use the date picker to view any day.</p>
+    </div>
+  </header>
+
+  <main>
+    <section id="controls" class="card">
+      <div class="control-row">
+        <label for="datePicker">Date</label>
+        <input id="datePicker" type="date" />
+      </div>
+
+      <div class="control-row">
+        <label for="search">Search</label>
+        <input id="search" placeholder="Search menu items (e.g., biryani, dosa)" />
+      </div>
+
+      <div id="filters" class="control-row">
+        <label><input type="checkbox" data-meal="breakfast" checked /> Breakfast</label>
+        <label><input type="checkbox" data-meal="lunch" checked /> Lunch</label>
+        <label><input type="checkbox" data-meal="snacks" checked /> Snacks</label>
+        <label><input type="checkbox" data-meal="dinner" checked /> Dinner</label>
+        <label><input id="specialOnly" type="checkbox" /> Special menu only</label>
+      </div>
+
+      <div class="control-row">
+        <button id="todayBtn">Today</button>
+        <button id="printBtn">Print</button>
+      </div>
+    </section>
+
+    <section id="menuDisplay"></section>
+  </main>
+
+  <footer>
+    <small>Menu data: February 2026. Service instructions included in menu JSON notes.</small>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

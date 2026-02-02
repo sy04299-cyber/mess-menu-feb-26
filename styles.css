@@ -1,0 +1,48 @@
+:root{
+  --accent:#2b7a78;
+  --muted:#666;
+  --card-bg:#fff;
+  --page-bg:#f7f7f8;
+  --veg:#2e7d32;
+  --nonveg:#c62828;
+}
+*{box-sizing:border-box}
+body{
+  font-family:system-ui,Arial,Helvetica,sans-serif;
+  margin:0;
+  padding:18px;
+  color:#111;
+  background:var(--page-bg);
+}
+.site-header{background:#fff;border-bottom:1px solid #e6e6e6;padding:12px;border-radius:8px}
+.header-inner{max-width:980px;margin:0 auto}
+header h1{margin:0;color:var(--accent);font-size:1.4rem}
+.subtitle{margin:6px 0 0 0;color:var(--muted)}
+main{max-width:980px;margin:18px auto}
+.card{background:var(--card-bg);border:1px solid #e6e6e6;padding:12px;border-radius:8px}
+#controls{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.control-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.control-row label{font-size:0.95rem;color:var(--muted)}
+#datePicker,#search{padding:8px;border-radius:6px;border:1px solid #ddd;min-width:180px}
+#filters label{font-size:0.9rem}
+#menuDisplay{display:grid;grid-template-columns:1fr;gap:12px}
+.card-day{border-left:6px solid var(--accent);padding:12px;background:#fff;border-radius:6px}
+.card-day h3{margin:0 0 8px 0;display:flex;align-items:center;gap:8px}
+.meal-title{font-weight:700;color:var(--accent);margin-top:8px}
+.badge{display:inline-block;padding:2px 8px;border-radius:12px;background:#f0f0f0;margin-left:8px;font-size:12px}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;color:#fff;font-size:12px;margin-left:8px}
+.tag-veg{background:var(--veg)}
+.tag-nv{background:var(--nonveg)}
+.meal-list{margin:6px 0 0 18px;padding:0}
+.notes{margin-top:8px;color:var(--muted);font-size:0.95rem}
+.print-header{display:none}
+@media(min-width:760px){
+  #menuDisplay{grid-template-columns:repeat(2,1fr)}
+}
+@media print{
+  #controls,header,footer{display:none}
+  body{padding:0}
+  #menuDisplay{grid-template-columns:1fr}
+  .card-day{border-left:none;border-top:6px solid var(--accent)}
+  .print-header{display:block;padding:12px;background:#fff;border-bottom:1px solid #e6e6e6}
+}
