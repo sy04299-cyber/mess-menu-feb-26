@@ -2,7 +2,8 @@ async function loadMenu(){
   const res = await fetch('menu.json');
   if(!res.ok) throw new Error('menu.json not found');
   const data = await res.json();
-  data.sort((a,b)=>a.date.localeCompare(b.date));
+  // data is { service_instructions: "...", entries: [ ... ] }
+  data.entries.sort((a,b)=>a.date.localeCompare(b.date));
   return data;
 }
 
@@ -14,14 +15,14 @@ function formatDateISO(d){
 }
 
 function detectVegNonVeg(item){
-  const nvKeywords = ['chicken','mutton','egg','fish','prawn','prawns','chicken','chicken 65','butter chicken','chettinad chicken'];
+  const nvKeywords = ['chicken','mutton','egg','fish','prawn','prawns','butter chicken','chettinad chicken','chicken 65','chicken gravy','chicken dum','chettinad'];
   const lower = item.toLowerCase();
   for(const k of nvKeywords) if(lower.includes(k)) return 'nv';
   return 'veg';
 }
 
 function renderMealList(items){
-  return items.split(';').map(i=>i.trim()).filter(Boolean).map(it=>{
+  return items.split(/;|\n/).map(i=>i.trim()).filter(Boolean).map(it=>{
     const type = detectVegNonVeg(it);
     const tag = type==='nv' ? `<span class="tag tag-nv">Non‑Veg</span>` : `<span class="tag tag-veg">Veg</span>`;
     return `<li>${it} ${tag}</li>`;
@@ -56,7 +57,7 @@ function applyFilters(data){
   const mealChecks = Array.from(document.querySelectorAll('#filters input[type=checkbox][data-meal]'))
     .filter(cb=>cb.checked).map(cb=>cb.dataset.meal);
 
-  let filtered = data.slice();
+  let filtered = data.entries.slice();
   if(dateVal) filtered = filtered.filter(d=>d.date===dateVal);
   if(specialOnly) filtered = filtered.filter(d=>d.is_special);
 
@@ -89,11 +90,14 @@ function applyFilters(data){
 document.addEventListener('DOMContentLoaded', async ()=>{
   const data = await loadMenu();
   const datePicker = document.getElementById('datePicker');
-  datePicker.min = data[0].date;
-  datePicker.max = data[data.length-1].date;
+  datePicker.min = data.entries[0].date;
+  datePicker.max = data.entries[data.entries.length-1].date;
 
   const todayISO = formatDateISO(new Date());
-  datePicker.value = (todayISO >= datePicker.min && todayISO <= datePicker.max) ? todayISO : data[0].date;
+  datePicker.value = (todayISO >= datePicker.min && todayISO <= datePicker.max) ? todayISO : data.entries[0].date;
+
+  // populate service instructions
+  document.getElementById('instructionsContent').innerText = data.service_instructions || '';
 
   applyFilters(data);
 
@@ -104,5 +108,10 @@ document.addEventListener('DOMContentLoaded', async ()=>{
   document.getElementById('todayBtn').addEventListener('click', ()=>{
     datePicker.value = (todayISO >= datePicker.min && todayISO <= datePicker.max) ? todayISO : datePicker.min;
     applyFilters(data);
+  });
+  document.getElementById('showInstructionsBtn').addEventListener('click', ()=>{
+    const sec = document.getElementById('serviceInstructions');
+    sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
+    sec.scrollIntoView({behavior:'smooth'});
   });
 });
